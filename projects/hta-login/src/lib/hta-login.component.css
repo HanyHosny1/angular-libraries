@@ -1,0 +1,179 @@
+.details-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 56px;
+  padding: 20px;
+  background-color: white;
+  direction: rtl;
+}
+
+.company-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.company-logo img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.inputs-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 30px;
+}
+
+.inputs-labels {
+  width: 100%;
+  padding-inline: 20px;
+}
+
+.input-fields {
+  width: 100%;
+  padding-inline: 20px;
+  height: 50px;
+}
+
+.remember-forgot-contaier {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.remember-me,
+.forgot-pass {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.remember-forgot {
+  padding-inline: 52px;
+  padding-block: 25px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon {
+  position: absolute;
+  right: 8%;
+  top: 14%;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.eye-show-pass {
+  position: absolute;
+  background: none;
+  border: none;
+  cursor: pointer;
+  left: 30px;
+  bottom: 31px;
+}
+
+.show-password-icon i {
+  font-size: 1.2rem;
+  color: #6c757d;
+}
+
+.btn-container {
+  margin-top: 0 !important;
+  margin: 20px;
+}
+
+.or-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  opacity: 0.8;
+  position: relative;
+  width: 450px;
+  padding-inline: 20px;
+}
+
+.or-row::before,
+.or-row::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: #6c757d;
+  opacity: 0.5;
+  transform: translateY(-5px);
+}
+
+.or-row::before {
+  margin-inline: 20px;
+}
+
+.or-row::after {
+  margin-inline: 20px;
+}
+
+.social-media-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 15px;
+}
+
+.google-btn,
+.facebook-btn {
+  display: flex;
+  margin: 7px;
+  width: 210px;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  padding: 7px;
+  border: none;
+  cursor: pointer;
+}
+
+.google-btn i,
+.facebook-btn i {
+  padding: 5px;
+  background-color: white;
+  color: rgb(11, 90, 159);
+  border-radius: 50%;
+}
+
+.facebook-btn i {
+  padding-inline: 7px;
+  margin-inline: 3px;
+}
+
+.google-btn i {
+  margin-inline: 10px;
+}
+
+.submit-btn {
+  width: 200px;
+  height: 50px;
+  font-size: 22px;
+  font-weight: 400;
+}

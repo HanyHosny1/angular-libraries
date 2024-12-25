@@ -5,6 +5,14 @@
     "outDir": "./dist/out-tsc",
     "strict": true,
     "noImplicitOverride": true,
+    "paths": {
+      "hta-login": [
+        "./dist/hta-login"
+      ],
+      "hta-table": [
+        "./dist/hta-table"
+      ]
+    },
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,

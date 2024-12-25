@@ -3,5 +3,74 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+    "hta-login": {
+      "projectType": "library",
+      "root": "projects/hta-login",
+      "sourceRoot": "projects/hta-login/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/hta-login/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/hta-login/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/hta-login/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/hta-login/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
+    },
+    "hta-table": {
+      "projectType": "library",
+      "root": "projects/hta-table",
+      "sourceRoot": "projects/hta-table/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/hta-table/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/hta-table/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/hta-table/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/hta-table/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": false
   }
 }

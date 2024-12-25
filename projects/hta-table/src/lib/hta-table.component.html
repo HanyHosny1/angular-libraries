@@ -1,0 +1,87 @@
+<table [class]="tableStyle">
+  <thead>
+    <tr>
+      <th
+        class="text-center table-headline"
+        *ngFor="let head of tableHeaderList"
+      >
+        {{ head.ar }}
+      </th>
+    </tr>
+  </thead>
+  <tbody *ngIf="tableBodyList">
+    <tr *ngFor="let row of tableBodyList; let i = index">
+      <td class="text-center" *ngIf="isHidden">{{ i + 1 }}</td>
+      <td class="text-center" *ngFor="let cell of listofObject">
+        <span
+          *ngIf="
+            cell.isImg != true &&
+              (cell?.isDate == undefined || cell.isDateTime == undefined);
+            else other_content
+          "
+        >
+          {{ cell.sub ? row[cell.key][cell.sub] : row[cell.key] }}
+        </span>
+
+        <ng-template #other_content>
+          <span
+            *ngIf="
+              cell.isImg != true &&
+              isList != true &&
+              cell.isDateTime == undefined
+            "
+          >
+            {{ row[cell.key] | date : "yyyy/MM/dd" }}</span
+          >
+          <span
+            *ngIf="
+              cell.isImg != true && cell.isDate == undefined && isList != true
+            "
+          >
+            {{ row[cell.key] | date : "yyyy/MM/dd hh:mm" }}</span
+          >
+        </ng-template>
+        <span *ngIf="cell.isList == true">
+          <ul class="list-group">
+            <li
+              class="list-group-item"
+              *ngFor="let item of row[cell.key]; let i = index"
+            >
+              <span>{{
+                cell.sub ? row[cell.key][i][cell.sub] : row[cell.key]
+              }}</span>
+            </li>
+          </ul>
+        </span>
+      </td>
+      <td>
+        <div class="d-flex justify-content-center gap-2">
+          <i
+            class="fa-regular fa-eye"
+            *ngIf="isEditable"
+            (click)="handleEditMode(row)"
+          >
+          </i>
+          <i
+            class="fa fa-user text-danger"
+            *ngIf="isDeleteble"
+            (click)="handleDeleteMode(row)"
+          >
+          </i>
+          <i
+            class="fa-solid fa-calendar-plus text-success"
+            *ngIf="isAdding"
+            (click)="handleAddMode(row)"
+          >
+          </i>
+          <i
+            class="fa-solid fa-file-excel text-warning"
+            *ngIf="isShowing"
+            (click)="handleShowModel(row)"
+          >
+          </i>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

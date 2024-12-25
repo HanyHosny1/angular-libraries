@@ -102,14 +102,24 @@ export class HtaLoginComponent implements OnInit {
     this.formGroupName = this.fb.group({
       loginInputFields: ['', Validators.required],
       password: ['', Validators.required],
+      rememberMe: [false],
     });
   }
 
   onSubmit() {
-    if (this.value && this.password) {
-      this.loginSubmit.emit(this.formGroupName.value);
+    if (this.formGroupName.valid) {
+      const loginLoad = this.formGroupName.value;
+
+      this.http.post(this.apiUrl, loginLoad).subscribe(
+        (response: any) => {
+          console.log('Login Successful:', response);
+        },
+        (error: any) => {
+          console.error('Login Failed:', error);
+        }
+      );
     } else {
-      alert('برجاء ادخال البيانات المطلوبة');
+      alert('Please provide all required fields!');
     }
   }
 

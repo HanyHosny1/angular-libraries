@@ -26,6 +26,7 @@ export class HtaLoginComponent implements OnInit {
   @Input() placeholderUser!: string;
   @Input() rememberMe!: string;
   @Input() forgetPassword!: string;
+  @Input() passwordTitle!: string;
 
   @Input() placeholderPassword!: string;
   @Input() buttonText!: string;
@@ -110,14 +111,25 @@ export class HtaLoginComponent implements OnInit {
     if (this.formGroupName.valid) {
       const loginLoad = this.formGroupName.value;
 
-      this.http.post(this.apiUrl, loginLoad).subscribe(
-        (response: any) => {
+      this.http.post(this.apiUrl, loginLoad).subscribe({
+        next: (response: any) => {
           console.log('Login Successful:', response);
+          this.loginSuccess.emit(response);
         },
-        (error: any) => {
+        error: (error: any) => {
           console.error('Login Failed:', error);
-        }
-      );
+
+          if (error.status === 400) {
+            alert('Invalid credentials, please try again!');
+          } else if (error.status === 500) {
+            alert('Server error, please try again later.');
+          } else {
+            alert('An error occurred, please try again.');
+          }
+
+          this.loginFailure.emit(error);
+        },
+      });
     } else {
       alert('Please provide all required fields!');
     }

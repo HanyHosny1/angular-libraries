@@ -5,9 +5,16 @@ import {
   FormsModule,
   ReactiveFormsModule,
   Validators,
+  FormControl,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+
+interface LoginFormControl {
+  key: string;
+  value: any;
+  required: boolean;
+}
 
 @Component({
   selector: 'lib-hta-login',
@@ -97,14 +104,46 @@ export class HtaLoginComponent implements OnInit {
     password: string;
   }>();
 
+  @Input() emailUserControl: LoginFormControl = {
+    key: 'loginInputFields',
+    value: '',
+    required: true,
+  };
+
+  @Input() passwordControl: LoginFormControl = {
+    key: 'password',
+    value: '',
+    required: true,
+  };
+
+  @Input() formControls: LoginFormControl[] = [
+    { key: 'rememberMe', value: false, required: false },
+  ];
+
   constructor(private fb: FormBuilder, private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.formGroupName = this.fb.group({
-      loginInputFields: ['', Validators.required],
-      password: ['', Validators.required],
-      rememberMe: [false],
+    // this.formGroupName = this.fb.group({
+    //   loginInputFields: ['', Validators.required],
+    //   password: ['', Validators.required],
+    //   rememberMe: [false],
+    // });
+    let group: any = {};
+    group[this.emailUserControl.key] = new FormControl(
+      this.emailUserControl.value,
+      Validators.required
+    );
+    group[this.passwordControl.key] = new FormControl(
+      this.passwordControl.value,
+      Validators.required
+    );
+    this.formControls.forEach((control) => {
+      group[control.key] = control.required
+        ? new FormControl(control.value || '', Validators.required)
+        : new FormControl(control.value || '');
     });
+    this.formGroupName = new FormGroup(group);
+    console.log(this.formGroupName);
   }
 
   onSubmit() {

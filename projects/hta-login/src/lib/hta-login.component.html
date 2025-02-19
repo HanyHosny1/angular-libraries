@@ -11,42 +11,29 @@
         <div class="inputs-container">
           <label class="inputs-labels" for="inputField" class="form-label">
             {{
-              loginInputType === "email" ? "البريد الالكتروني" : "اسم المستخدم"
+            loginInputType === "email" ? "البريد الالكتروني" : "اسم المستخدم"
             }}
           </label>
-          <input
-            type="text"
-            class="form-control input-fields"
-            id="loginInputFields"
-            formControlName="loginInputFields"
-            [placeholder]="
+          <input type="text" class="form-control input-fields" id="loginInputFields"
+            [formControlName]="emailUserControl.key" [placeholder]="
               loginInputType === 'email' ? placeholderEmail : placeholderUser
-            "
-          />
+            " />
         </div>
         <div class="inputs-container position-relative">
           <label class="inputs-labels" for="password" class="form-label">
             {{ passwordTitle }}
           </label>
-          <input
-            type="password"
-            class="input-group form-control input-fields"
-            id="password"
-            formControlName="password"
-            [placeholder]="placeholderPassword"
-            aria-describedby="passwordHelp"
-          />
+          <input type="password" class="input-group form-control input-fields" id="password"
+            [formControlName]="passwordControl.key" [placeholder]="placeholderPassword"
+            aria-describedby="passwordHelp" />
 
           @if (isShowPassword) {
           <div [ngStyle]="eyeShowPassword">
-            <i
-              (click)="togglePasswordVisibility()"
-              [class]="
+            <i (click)="togglePasswordVisibility()" [class]="
                 passwordVisible
                   ? 'icon fa-solid fa-eye'
                   : 'icon fa-solid fa-eye-slash'
-              "
-            ></i>
+              "></i>
           </div>
           }
         </div>
@@ -61,18 +48,10 @@
       </ul>
     </div> -->
 
-        <div
-          class="d-flex justify-content-between align-items-center mb-3"
-          class="remember-forgot"
-        >
+        <div class="d-flex justify-content-between align-items-center mb-3" class="remember-forgot">
           @if (isRememberMe) {
           <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              id="rememberMe"
-              formControlName="rememberMe"
-            />
+            <input class="form-check-input" type="checkbox" id="rememberMe" formControlName="rememberMe" />
             <label class="form-check-label" for="rememberMe">
               {{ rememberMe }}
             </label>
@@ -83,12 +62,8 @@
         </div>
 
         <div class="text-center btn-container">
-          <button
-            type="submit"
-            class="submit-btn btn btn-primary"
-            [disabled]="formGroupName.invalid || isLoading"
-            (click)="onSubmit()"
-          >
+          <button type="submit" class="submit-btn btn btn-primary" [disabled]="formGroupName.invalid || isLoading"
+            (click)="onSubmit()">
             {{ isLoading ? "Loading..." : buttonText }}
           </button>
         </div>

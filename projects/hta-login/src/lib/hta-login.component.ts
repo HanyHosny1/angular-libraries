@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 interface LoginFormControl {
   key: string;
@@ -19,7 +20,13 @@ interface LoginFormControl {
 @Component({
   selector: 'lib-hta-login',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule, HttpClientModule],
+  imports: [
+    ReactiveFormsModule,
+    FormsModule,
+    CommonModule,
+    HttpClientModule,
+    ToastrModule,
+  ],
   templateUrl: './hta-login.component.html',
   styleUrl: './hta-login.component.css',
 })
@@ -28,11 +35,11 @@ export class HtaLoginComponent implements OnInit {
 
   @Input() title: string = 'Login';
 
-  @Input() loginInputType: 'email' | 'userName' = 'email';
+  @Input() loginInputType: 'email' | 'username' = 'username';
   @Input() placeholderEmail!: string;
   @Input() placeholderUser!: string;
   @Input() rememberMe!: string;
-  @Input() forgetPassword!: string;
+  @Input() forgotPassword!: string;
   @Input() passwordTitle!: string;
 
   @Input() placeholderPassword!: string;
@@ -41,7 +48,7 @@ export class HtaLoginComponent implements OnInit {
   @Input() isLoading: boolean = false;
   @Input() isShowPassword: boolean = true;
   @Input() isRememberMe: boolean = true;
-  @Input() isForgetPassword: boolean = true;
+  @Input() isForgotPassword: boolean = true;
   @Input() isShowOrSocialBtns: boolean = true;
   @Input() isFacebookLogin: boolean = true;
   @Input() isGoogleLogin: boolean = true;
@@ -66,7 +73,7 @@ export class HtaLoginComponent implements OnInit {
     borderRadius: '56px',
     padding: '2px',
     margin: 'auto',
-    boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.2',
+    boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.2)',
     background:
       'linear-gradient(180deg, var(--primary-color) 25%, rgba(33, 150, 243, 0) 50%)',
   };
@@ -104,8 +111,8 @@ export class HtaLoginComponent implements OnInit {
     password: string;
   }>();
 
-  @Input() emailUserControl: LoginFormControl = {
-    key: 'loginInputFields',
+  @Input() usernameControl: LoginFormControl = {
+    key: 'username',
     value: '',
     required: true,
   };
@@ -120,7 +127,11 @@ export class HtaLoginComponent implements OnInit {
     { key: 'rememberMe', value: false, required: false },
   ];
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {}
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     // this.formGroupName = this.fb.group({
@@ -129,8 +140,8 @@ export class HtaLoginComponent implements OnInit {
     //   rememberMe: [false],
     // });
     let group: any = {};
-    group[this.emailUserControl.key] = new FormControl(
-      this.emailUserControl.value,
+    group[this.usernameControl.key] = new FormControl(
+      this.usernameControl.value,
       Validators.required
     );
     group[this.passwordControl.key] = new FormControl(
@@ -152,25 +163,25 @@ export class HtaLoginComponent implements OnInit {
 
       this.http.post(this.apiUrl, loginLoad).subscribe({
         next: (response: any) => {
-          console.log('Login Successful:', response);
+          this.toastr.success('Login Successful!');
           this.loginSuccess.emit(response);
         },
         error: (error: any) => {
           console.error('Login Failed:', error);
 
           if (error.status === 400) {
-            alert('Invalid credentials, please try again!');
+            this.toastr.error('Invalid credentials, please try again!');
           } else if (error.status === 500) {
-            alert('Server error, please try again later.');
+            this.toastr.error('Server error, please try again later.');
           } else {
-            alert('An error occurred, please try again.');
+            this.toastr.error('An error occurred, please try again.');
           }
 
           this.loginFailure.emit(error);
         },
       });
     } else {
-      alert('Please provide all required fields!');
+      this.toastr.error('Please provide all required fields!');
     }
   }
 

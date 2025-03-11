@@ -1,4 +1,4 @@
-<form [formGroup]="formGroupName" (ngSubmit)="onSubmit()">
+<form [formGroup]="formGroupName">
   <div [ngStyle]="wholePageContainerStyle">
     <div [ngStyle]="loginWrapperStyle">
       <div [ngStyle]="direction" class="details-container mx-auto p-4">
@@ -15,7 +15,7 @@
             }}
           </label>
           <input type="text" class="form-control input-fields" id="loginInputFields"
-            [formControlName]="emailUserControl.key" [placeholder]="
+            [formControlName]="usernameControl.key" [placeholder]="
               loginInputType === 'email' ? placeholderEmail : placeholderUser
             " />
         </div>
@@ -56,8 +56,8 @@
               {{ rememberMe }}
             </label>
           </div>
-          } @if (isForgetPassword) {
-          <a href="#">{{ forgetPassword }}</a>
+          } @if (isForgotPassword) {
+          <a href="#">{{ forgotPassword }}</a>
           }
         </div>
 

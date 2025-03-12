@@ -123,9 +123,7 @@ export class HtaLoginComponent implements OnInit {
     required: true,
   };
 
-  @Input() formControls: LoginFormControl[] = [
-    { key: 'rememberMe', value: false, required: false },
-  ];
+  @Input() formControls: LoginFormControl[] = [];
 
   constructor(
     private fb: FormBuilder,

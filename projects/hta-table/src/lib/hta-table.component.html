@@ -57,13 +57,14 @@
       <td>
         <div class="d-flex justify-content-center gap-2">
           <i
-            class="fa-regular fa-eye"
+            class="fa-regular fa-pen-to-square text-warning"
             *ngIf="isEditable"
             (click)="handleEditMode(row)"
           >
           </i>
+
           <i
-            class="fa fa-user text-danger"
+            class="fa-solid fa-trash text-danger"
             *ngIf="isDeleteble"
             (click)="handleDeleteMode(row)"
           >
@@ -75,7 +76,7 @@
           >
           </i>
           <i
-            class="fa-solid fa-file-excel text-warning"
+            class="fa-regular fa-eye text-primary"
             *ngIf="isShowing"
             (click)="handleShowModel(row)"
           >

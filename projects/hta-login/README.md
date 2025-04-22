@@ -4,13 +4,14 @@ This library was generated with [Angular CLI](https://github.com/angular/angular
 
 This is an updated release of `HtaLogin`.
 
+Compatible with Angular versions 17 and above.
+
 Requires `ngx-toastr` for toaster alerts.
 
 ## Installation
 
 ```
 npm install --save ngx-hta-login
-npm install --save ngx-toastr
 ```
 
 Do not forget to add the `ngx-toastr` provider and CSS!

@@ -21,13 +21,14 @@ Do not forget to add the `ngx-toastr` provider and CSS!
 `*.component.html`:
 
 ```html
-<lib-hta-login apiUrl="YOUR_API_HERE" [usernameControl]="username" [passwordControl]="password" (loginSuccess)="onLoginSuccess($event)" (loginFailure)="onLoginFailure($event)" />
+<lib-hta-login [apiUrl]="apiUrl" loginInputType="username" [usernameControl]="username" [passwordControl]="password" (loginSuccess)="onLoginSuccess($event)" (loginFailure)="onLoginFailure($event)" />
 ```
 
 `*.component.ts`:
 
 ```ts
 export class ExampleComponent {
+  apiUrl = "YOUR_API_HERE";
   username = { key: "username", value: "", required: true };
   password = { key: "password", value: "", required: true };
 
@@ -47,33 +48,37 @@ This allows the library to perform its login functionality with the bare minimum
 
 The library provides multiple inputs for customising how it works and looks:
 
-- `loginInputType`: **Required.** String input for choosing between `email` (email) and `username` (username).
-- `usernameControl`: **Required.** Object to specify the `username` or `email` key that will be used in the login payload: `{ key: 'YOUR_KEY_HERE', value: '', required: true }`.
-- `passwordControl`: **Required.** Object to specify the `password` key that will be used in the login payload: `{ key: 'YOUR_KEY_HERE', value: '', required: true }`.
-- `apiUrl`: **Required.** The API URL that the payload will be sent to. Preferred to be referenced from a string in your `.component.ts` file for security reasons.
-- `formControls`: Array of additional control objects to be added to the login payload, if needed: `[ { key: 'YOUR_KEY_HERE', value: '', required: true } ]`.
-- `placeholderEmail`: A string for the placeholder text in the email input when `loginInputType` is `email`.
-- `placeholderUser`: A string for the placeholder text in the username input when `loginInputType` is `username`.
-- `placeholderPassword`: A string for the placeholder text in the password input.
-- `rememberMe`: String to show in the "Remember Me" area.
-- `isRememberMe`: Boolean to select whether the "Remember Me" area is enabled or not.
-- `forgotPassword`: String to show in the "Forgot Password?" area.
-- `isForgotPassword`: Boolean to select whether the "Forgot Password?" area is enabled or not.
-- `passwordTitle`: String to show in the "Password" label area.
-- `isShowPassword`: Boolean to enable or disable the functionality to show the password.
-- `buttonText`: String to show in the login button. Will always be overridden by `Loading...` when the login payload has been sent and is awaiting the response.
-- `isShowOrSocialBtns`: Boolean to enable or disable the Social login buttons, currently Facebook and Google.
-- `isFacebookLogin`: Boolean to enable the Facebook login. Requires `isShowOrSocialBtns` to be `true`.
-- `isGoogleLogin`: Boolean to enable the Google login. Requires `isShowOrSocialBtns` to be `true`.
-- `CompanyLogoSrc`: String to reference the image asset that will be used in the Company Logo area.
-- `isShowCompanyLogo`: Boolean to enable or disable the Company Logo area.
+| Input                 | Description                                                                                                                                             | Values                                                    | Default Value                                    |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------ |
+| `loginInputType`      | **Required.** String input for choosing between `email` (email) and `username` (username).                                                              | `email` or `username`                                     | `username`                                       |
+| `usernameControl`     | **Required.** Object to specify the `username` or `email` key that will be used in the login payload.                                                   | `{ key: 'YOUR_KEY_HERE', value: '', required: true }`     | `{ key: 'username', value: '', required: true }` |
+| `passwordControl`     | **Required.** Object to specify the `password` key that will be used in the login payload.                                                              | `{ key: 'YOUR_KEY_HERE', value: '', required: true }`     | `{ key: 'password', value: '', required: true }` |
+| `apiUrl`              | **Required.** The API URL that the payload will be sent to. Preferred to be referenced from a string in your `.component.ts` file for security reasons. | string                                                    | `''`                                             |
+| `formControls`        | Array of additional control objects to be added to the login payload, if needed.                                                                        | `[ { key: 'YOUR_KEY_HERE', value: '', required: true } ]` | `[]`                                             |
+| `placeholderEmail`    | A string for the placeholder text in the email input when `loginInputType` is `email`.                                                                  | string                                                    | `null`                                           |
+| `placeholderUser`     | A string for the placeholder text in the username input when `loginInputType` is `username`.                                                            | string                                                    | `null`                                           |
+| `placeholderPassword` | A string for the placeholder text in the password input.                                                                                                | string                                                    | `null`                                           |
+| `rememberMe`          | String to show in the "Remember Me" area.                                                                                                               | string                                                    | `null`                                           |
+| `isRememberMe`        | Boolean to select whether the "Remember Me" area is enabled or not.                                                                                     | boolean                                                   | `true`                                           |
+| `forgotPassword`      | String to show in the "Forgot Password?" area.                                                                                                          | string                                                    | `null`                                           |
+| `isForgotPassword`    | Boolean to select whether the "Forgot Password?" area is enabled or not.                                                                                | boolean                                                   | `true`                                           |
+| `passwordTitle`       | String to show in the "Password" label area.                                                                                                            | string                                                    | `null`                                           |
+| `isShowPassword`      | Boolean to enable or disable the functionality to show the password.                                                                                    | boolean                                                   | `true`                                           |
+| `buttonText`          | String to show in the login button. Will always be overridden by `Loading...` when the login payload has been sent and is awaiting the response.        | string                                                    | `null`                                           |
+| `isShowOrSocialBtns`  | Boolean to enable or disable the Social login buttons, currently Facebook and Google.                                                                   | boolean                                                   | `true`                                           |
+| `isFacebookLogin`     | Boolean to enable the Facebook login. Requires `isShowOrSocialBtns` to be `true`.                                                                       | boolean                                                   | `true`                                           |
+| `isGoogleLogin`       | Boolean to enable the Google login. Requires `isShowOrSocialBtns` to be `true`.                                                                         | boolean                                                   | `true`                                           |
+| `CompanyLogoSrc`      | String to reference the image asset that will be used in the Company Logo area.                                                                         | string                                                    | `''`                                             |
+| `isShowCompanyLogo`   | Boolean to enable or disable the Company Logo area.                                                                                                     | boolean                                                   | `true`                                           |
 
 ## Outputs
 
 There are mainly two outputs for handling login responses:
 
-- `loginSuccess`: Event fired when the login is successful. The response varies depending on how your API handles login responses.
-- `loginFailure`: Event fired when the login fails. The response varies depending on how your API handles login responses.
+| Output         | Description                                                                                                      |
+| -------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `loginSuccess` | Event fired when the login is successful. The response varies depending on how your API handles login responses. |
+| `loginFailure` | Event fired when the login fails. The response varies depending on how your API handles login responses.         |
 
 ## CSS Inputs
 

@@ -1,6 +1,6 @@
 {
-  "name": "hta-login",
-  "version": "0.0.3-rev4",
+  "name": "ngx-hta-login",
+  "version": "0.0.3-rev5",
   "peerDependencies": {
     "@angular/common": ">=17.0.0",
     "@angular/core": ">=17.0.0",

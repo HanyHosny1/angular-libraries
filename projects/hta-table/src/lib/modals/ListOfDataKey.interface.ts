@@ -4,5 +4,6 @@ export interface ListOfDataKey {
   isDateTime?: boolean;
   sub?: string;
   isImg?: boolean;
+  isThumbnail?: boolean;
   isList?: boolean;
 }

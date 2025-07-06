@@ -10,13 +10,15 @@
     </tr>
   </thead>
   <tbody *ngIf="tableBodyList">
-    <tr *ngFor="let row of tableBodyList; let i = index">
-      <td class="text-center" *ngIf="isHidden">{{ i + 1 }}</td>
+    <tr *ngFor="let row of shownTableBody; let i = index">
+      <td class="text-center" *ngIf="!isHidden">{{ i + 1 }}</td>
       <td class="text-center" *ngFor="let cell of listofObject">
         <span
           *ngIf="
             cell.isImg != true &&
-              (cell?.isDate == undefined || cell.isDateTime == undefined);
+              cell?.isDate != true &&
+              cell.isDateTime != true &&
+              cell.isList != true;
             else other_content
           "
         >
@@ -28,57 +30,71 @@
             *ngIf="
               cell.isImg != true &&
               isList != true &&
-              cell.isDateTime == undefined
+              cell.isDateTime != true &&
+              cell.isDate == true
             "
           >
             {{ row[cell.key] | date : "yyyy/MM/dd" }}</span
           >
           <span
             *ngIf="
-              cell.isImg != true && cell.isDate == undefined && isList != true
+              cell.isImg != true && cell.isDate != true &&
+              cell.isDateTime == true && isList != true
             "
           >
             {{ row[cell.key] | date : "yyyy/MM/dd hh:mm" }}</span
           >
+          <span
+            *ngIf="
+              cell.isImg == true && cell.isDate != true &&
+              cell.isDateTime != true && isList != true
+            "
+            class="d-flex justify-content-center"
+          >
+            <img [src]="imageUrl + row[cell.key]" class="table-image" [ngClass]="{'table-image-thumbnail': cell.isThumbnail}" />
+          </span>
+          <span *ngIf="
+            cell.isImg != true && cell.isDate != true &&
+              cell.isDateTime != true && isList == true
+          ">
+            <ul class="list-group">
+              <li
+                class="list-group-item"
+                *ngFor="let item of row[cell.key]; let i = index"
+              >
+                <span>{{
+                  cell.sub ? row[cell.key][i][cell.sub] : row[cell.key]
+                }}</span>
+              </li>
+            </ul>
+          </span>
         </ng-template>
-        <span *ngIf="cell.isList == true">
-          <ul class="list-group">
-            <li
-              class="list-group-item"
-              *ngFor="let item of row[cell.key]; let i = index"
-            >
-              <span>{{
-                cell.sub ? row[cell.key][i][cell.sub] : row[cell.key]
-              }}</span>
-            </li>
-          </ul>
-        </span>
       </td>
       <td>
         <div class="d-flex justify-content-center gap-2">
           <i
             class="fa-regular fa-pen-to-square text-warning"
             *ngIf="isEditable"
-            (click)="handleEditMode(row)"
+            (click)="handleEditMode(row, i)"
           >
           </i>
 
           <i
             class="fa-solid fa-trash text-danger"
             *ngIf="isDeleteble"
-            (click)="handleDeleteMode(row)"
+            (click)="handleDeleteMode(row, i)"
           >
           </i>
           <i
             class="fa-solid fa-calendar-plus text-success"
             *ngIf="isAdding"
-            (click)="handleAddMode(row)"
+            (click)="handleAddMode(row, i)"
           >
           </i>
           <i
             class="fa-regular fa-eye text-primary"
             *ngIf="isShowing"
-            (click)="handleShowModel(row)"
+            (click)="handleShowModel(row, i)"
           >
           </i>
         </div>
@@ -86,3 +102,18 @@
     </tr>
   </tbody>
 </table>
+@if (hasPagination) {
+<ul class="pagination set-paginator-style">
+  <li class="page-item" [ngClass]="{ disabled: currentPage == 0 }">
+    <a class="page-link" (click)="prevPage()">الصفحة السابقة</a>
+  </li>
+  @for (page of [].constructor(pageCount); let inx = $index; track inx) {
+  <li class="page-item" [ngClass]="{ active: inx == currentPage }">
+    <a class="page-link" (click)="selectPage(inx)">{{ inx + 1 }}</a>
+  </li>
+  }
+  <li class="page-item" [ngClass]="{ disabled: currentPage == pageCount - 1 }">
+    <a class="page-link" (click)="nextPage()">الصفحة التالية</a>
+  </li>
+</ul>
+}

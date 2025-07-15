@@ -22,7 +22,11 @@
             else other_content
           "
         >
-          {{ cell.sub ? row[cell.key][cell.sub] : row[cell.key] }}
+          @if (cell.isInnerHTML) {
+            <span [innerHTML]="letsRender(cell.sub ? row[cell.key][cell.sub] : row[cell.key])"></span>
+          } @else {
+            <span>{{ cell.sub ? row[cell.key][cell.sub] : row[cell.key] }}</span>
+          }
         </span>
 
         <ng-template #other_content>

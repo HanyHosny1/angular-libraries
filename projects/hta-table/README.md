@@ -84,6 +84,7 @@ interface ListOfDataKey {
   isImg?: boolean;
   isThumbnail?: boolean;
   isList?: boolean;
+  isInnerHTML?: boolean;
 }
 ```
 
@@ -96,6 +97,7 @@ interface ListOfDataKey {
 | `isImg` | **Optional.** Is this element an Image? If yes, remember to set the `imageUrl` input! |
 | `isThumbnail` | **Optional.** If the element is an Image, is it supposed to be a small thumbnail? |
 | `isList` | **Optional.** Is this element a list of items? |
+| `isInnerHTML` | **Optional.** Is this element a piece of HTML code (think [Quill](https://quilljs.com/))? **THIS BYPASSES SECURITY! Make sure your HTML is safe!** |
 
 ## Outputs
 

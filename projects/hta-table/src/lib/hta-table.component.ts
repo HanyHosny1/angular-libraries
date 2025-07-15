@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  inject,
   Input,
   OnChanges,
   OnInit,
@@ -10,6 +11,7 @@ import {
 
 import { ListOfDataKey } from './modals/ListOfDataKey.interface';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'lib-hta-table',
@@ -40,6 +42,7 @@ export class HtaTableComponent implements OnInit, OnChanges {
     new EventEmitter(); //here is the emitter needed to make the user able to add more details on the selected row
   @Output() callbackShow: EventEmitter<{ row: any; index: number }> =
     new EventEmitter(); //here is the emitter needed to make the user able to show more details on the selected row
+  private domSanitiser: DomSanitizer = inject(DomSanitizer);
 
   isList: boolean = false;
   currentPage: number = 0;
@@ -94,5 +97,9 @@ export class HtaTableComponent implements OnInit, OnChanges {
     } else {
       this.shownTableBody = this.tableBodyList;
     }
+  }
+
+  letsRender(item: string) {
+    return this.domSanitiser.bypassSecurityTrustHtml(item);
   }
 }

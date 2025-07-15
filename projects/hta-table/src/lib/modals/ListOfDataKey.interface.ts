@@ -6,4 +6,5 @@ export interface ListOfDataKey {
   isImg?: boolean;
   isThumbnail?: boolean;
   isList?: boolean;
+  isInnerHTML?: boolean;
 }

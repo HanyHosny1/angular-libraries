@@ -16,6 +16,22 @@ npm install --save ngx-hta-table
 
 Remember to provide the Bootstrap and Font Awesome CSS!
 
+There is an image asset included that is used when the table receives an empty body, and to use it, you need to add the assets in your `angular.json`:
+
+```json
+/*...*/
+"assets": [
+  /*...*/
+  {
+      "glob": "**/*",
+      "input": "node_modules/ngx-hta-table/assets",
+      "output": "/assets/"
+  },
+  /*...*/
+],
+/*...*/
+```
+
 ## Basic Usage
 
 `*.component.html`:

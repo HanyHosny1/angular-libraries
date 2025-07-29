@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
   FormControl,
+  ValidatorFn,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -41,6 +42,8 @@ export class HtaLoginComponent implements OnInit {
   @Input() rememberMe!: string;
   @Input() forgotPassword!: string;
   @Input() passwordTitle!: string;
+  @Input() passwordRegExp: RegExp = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,}$/;
+  @Input() usePasswordRegExpValidation: boolean = false;
 
   @Input() placeholderPassword!: string;
   @Input() buttonText!: string;
@@ -54,6 +57,10 @@ export class HtaLoginComponent implements OnInit {
   @Input() isGoogleLogin: boolean = true;
   @Input() isShowCompanyLogo: boolean = true;
   @Input() CompanyLogoSrc: string = '';
+  @Input() usernameInvalidText: string = 'يجب إدخال إسم المستخدم.';
+  @Input() emailInvalidText: string = 'يجب إدخال البريد الإلكتروني.';
+  @Input() passwordInvalidText: string = 'يجب إدخال كلمة السر.';
+  @Input() passwordRegExpInvalidText: string = 'يجب أن تتكون كلمة السر من 8 أحرف، شاملين على الأقل حرف كبير وصغير، ورقم، وعلامة.';
 
   @Input() wholePageContainerStyle: any = {
     display: 'flex',
@@ -142,9 +149,13 @@ export class HtaLoginComponent implements OnInit {
       this.usernameControl.value,
       Validators.required
     );
+    let passwordValidators: ValidatorFn[] = [Validators.required];
+    if (this.usePasswordRegExpValidation) {
+      passwordValidators.push(Validators.pattern(this.passwordRegExp));
+    }
     group[this.passwordControl.key] = new FormControl(
       this.passwordControl.value,
-      Validators.required
+      passwordValidators
     );
     this.formControls.forEach((control) => {
       group[control.key] = control.required
@@ -155,10 +166,17 @@ export class HtaLoginComponent implements OnInit {
     console.log(this.formGroupName);
   }
 
+  decentPassword(control: FormControl): {[s: string]: boolean} | null {
+        if (!this.passwordRegExp.test(control.value)) {
+            return {'invalidPassword': true};
+        } else {
+            return null;
+        }
+    }
+
   onSubmit() {
     if (this.formGroupName.valid) {
       const loginLoad = this.formGroupName.value;
-
       this.http.post(this.apiUrl, loginLoad).subscribe({
         next: (response: any) => {
           this.toastr.success('Login Successful!');
@@ -189,5 +207,13 @@ export class HtaLoginComponent implements OnInit {
       'password'
     ) as HTMLInputElement;
     passwordField.type = this.passwordVisible ? 'text' : 'password';
+  }
+
+  get usernameField() {
+    return this.formGroupName.controls[this.usernameControl.key];
+  }
+
+  get passwordField() {
+    return this.formGroupName.controls[this.passwordControl.key];
   }
 }

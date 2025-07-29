@@ -47,6 +47,14 @@
   height: 50px;
 }
 
+.input-fields.invalid-input {
+  border: 2px solid red;
+}
+
+.invalid-input {
+  color: red;
+}
+
 .remember-forgot-contaier {
   display: flex;
   flex-direction: row;

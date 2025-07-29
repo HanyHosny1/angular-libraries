@@ -63,6 +63,8 @@ The library provides multiple inputs for customising how it works and looks:
 | `forgotPassword`      | String to show in the "Forgot Password?" area.                                                                                                          | string                                                    | `null`                                           |
 | `isForgotPassword`    | Boolean to select whether the "Forgot Password?" area is enabled or not.                                                                                | boolean                                                   | `true`                                           |
 | `passwordTitle`       | String to show in the "Password" label area.                                                                                                            | string                                                    | `null`                                           |
+| `usePasswordRegExpValidation` | Boolean to decide whether to use a Regular Expression validator for the password input or not. | boolean | `false` |
+| `passwordRegExp` | The regular expression to validate the password with, in the case you set `usePasswordRegExpValidation` to `true`. | RegExp | `/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,}$/` |
 | `isShowPassword`      | Boolean to enable or disable the functionality to show the password.                                                                                    | boolean                                                   | `true`                                           |
 | `buttonText`          | String to show in the login button. Will always be overridden by `Loading...` when the login payload has been sent and is awaiting the response.        | string                                                    | `null`                                           |
 | `isShowOrSocialBtns`  | Boolean to enable or disable the Social login buttons, currently Facebook and Google.                                                                   | boolean                                                   | `true`                                           |
@@ -70,6 +72,10 @@ The library provides multiple inputs for customising how it works and looks:
 | `isGoogleLogin`       | Boolean to enable the Google login. Requires `isShowOrSocialBtns` to be `true`.                                                                         | boolean                                                   | `true`                                           |
 | `CompanyLogoSrc`      | String to reference the image asset that will be used in the Company Logo area.                                                                         | string                                                    | `''`                                             |
 | `isShowCompanyLogo`   | Boolean to enable or disable the Company Logo area.                                                                                                     | boolean                                                   | `true`                                           |
+| `usernameInvalidText` | String to show when the username input is invalid. | string | `'يجب إدخال إسم المستخدم.'` |
+| `emailInvalidText` | String to show when the email input is invalid. | string | `'يجب إدخال البريد الإلكتروني.'` |
+| `usernameInvalidText` | String to show when the password input is invalid. | string | `'يجب إدخال كلمة السر.'` |
+| `passwordRegExpInvalidText` | String to show when the password fails to match the Regular Expression defined in `passwordRegExp`. | string | `'يجب أن تتكون كلمة السر من 8 أحرف، شاملين على الأقل حرف كبير وصغير، ورقم، وعلامة.'` |
 
 ## Outputs
 

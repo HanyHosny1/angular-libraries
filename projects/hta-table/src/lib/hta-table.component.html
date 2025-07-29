@@ -10,7 +10,8 @@
     </tr>
   </thead>
   <tbody *ngIf="tableBodyList">
-    <tr *ngFor="let row of shownTableBody; let i = index">
+    @for (row of shownTableBody; track row; let i = $index) {
+    <tr>
       <td class="text-center" *ngIf="!isHidden">{{ i + 1 }}</td>
       <td class="text-center" *ngFor="let cell of listofObject">
         <span
@@ -104,6 +105,16 @@
         </div>
       </td>
     </tr>
+    } @empty {
+      <tr class="no-data-tr">
+        <td [colSpan]="tableHeaderList.length">
+          <div class="d-flex flex-column align-items-center gap-2 no-data-row">
+            <img src="assets/no-results.jpg">
+            <p class="">لا توجد بيانات.</p>
+          </div>
+        </td>
+      </tr>
+    }
   </tbody>
 </table>
 @if (hasPagination) {

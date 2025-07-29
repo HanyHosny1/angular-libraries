@@ -26,3 +26,15 @@
   max-height: 40px !important;
   max-width: 80px !important;
 }
+.no-data-row {
+  width: 100%;
+  padding: 1rem;
+}
+.no-data-row img {
+  width: 240px;
+  height: 240px;
+}
+.no-data-row p {
+  font-size: 32px;
+  font-weight: bold;
+}

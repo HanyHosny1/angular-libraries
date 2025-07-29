@@ -17,7 +17,10 @@
           <input type="text" class="form-control input-fields" id="loginInputFields"
             [formControlName]="usernameControl.key" [placeholder]="
               loginInputType === 'email' ? placeholderEmail : placeholderUser
-            " />
+            " [ngClass]="{'invalid-input': usernameField.invalid && !usernameField.pristine}" />
+          @if (usernameField.invalid && !usernameField.pristine) {
+            <small class="invalid-input">{{ loginInputType === "email" ? emailInvalidText : usernameInvalidText }}</small>
+          }
         </div>
         <div class="inputs-container position-relative">
           <label class="inputs-labels" for="password" class="form-label">
@@ -25,8 +28,18 @@
           </label>
           <input type="password" class="input-group form-control input-fields" id="password"
             [formControlName]="passwordControl.key" [placeholder]="placeholderPassword"
-            aria-describedby="passwordHelp" />
-
+            aria-describedby="passwordHelp" [ngClass]="{'invalid-input': passwordField.invalid && !passwordField.pristine}" />
+          @if (passwordField.invalid && !passwordField.pristine) {
+            <small class="invalid-input">
+              @if (passwordField.errors) {
+                @if (passwordField.errors['pattern']) {
+                {{ passwordRegExpInvalidText }}
+              } @else if (passwordField.errors['required']) {
+                {{ passwordInvalidText }}
+              }
+              }
+            </small>
+          }
           @if (isShowPassword) {
           <div [ngStyle]="eyeShowPassword">
             <i (click)="togglePasswordVisibility()" [class]="
